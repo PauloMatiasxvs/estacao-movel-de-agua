@@ -185,7 +185,7 @@ const DURATION = 52;
 const STEPS = [
   { k: 'local', t: 0, t1: 5, n: 'Indústria sem água tratada', d: 'O poço da indústria enche a caixa de água bruta, mas essa água tem sais e dureza acima do padrão do processo.' },
   { k: 'chegada', t: 5, t1: 15, n: 'Chegada da unidade móvel', d: 'A picape reboca a unidade até o pátio da indústria; o reboque para ao lado das caixas e baixa os quatro pés de apoio.' },
-  { k: 'solar', t: 15, t1: 23, n: 'Abertura e energia solar', d: 'As portas laterais sobem com os 6 módulos fotovoltaicos voltados para o sol. Eles carregam as baterias e ligam o painel de controle.' },
+  { k: 'solar', t: 15, t1: 23, n: 'Abertura e energia solar', d: 'As portas laterais e a tampa traseira sobem com os 6 módulos fotovoltaicos voltados para o sol. Eles carregam as baterias e ligam o painel de controle.' },
   { k: 'conexao', t: 23, t1: 27, n: 'Conexões', d: 'Três mangueiras: entrada de água bruta, saída de água tratada para a caixa elevada e saída do rejeito.' },
   { k: 'tratamento', t: 27, t1: 40, n: 'Tratamento', d: 'A água bruta passa pelo filtro de sedimentos e pela bomba de alta pressão até a membrana de osmose reversa. A água tratada enche a caixa elevada.' },
   { k: 'saida', t: 40, t1: 52, n: 'Desmobilização e saída', d: 'Mangueiras recolhidas e portas fechadas: a picape leva a unidade para o próximo cliente.' }
@@ -202,7 +202,7 @@ const INFO = {
   poco: { t: 'Poço tubular', f: 'bruta', d: 'Bomba submersa recalca a água do aquífero para a caixa de água bruta. Essa água tem sais e dureza acima do padrão exigido pelo processo industrial.', s: [['Profundidade', '≈ 60 m'], ['Vazão', '2.000 L/h'], ['Bomba', 'submersa 1,5 cv']] },
   bruta: { t: 'Caixa de água bruta', f: 'bruta', d: 'Reservatório de acumulação da água do poço, antes do tratamento. É daqui que a unidade móvel capta.', s: [['Volume', '5.000 L'], ['Sólidos dissolvidos', '≈ 2.500 mg/L'], ['Uso', 'não potável']] },
   reboque: { t: 'Unidade móvel de tratamento', f: 'energia', d: 'Reboque de dois eixos com a estação de osmose reversa, baterias e painel de controle. Chega à indústria, abastece a caixa de água tratada e segue para o próximo cliente, sem depender da rede elétrica.', s: [['Dimensões', '3,8 × 2,0 × 2,5 m'], ['Produção', '1.000 L/h'], ['Operação', '100% solar']] },
-  solar: { t: 'Módulos fotovoltaicos', f: 'energia', d: 'Três módulos em cada porta lateral. No transporte ficam na vertical, protegidos; na operação as portas sobem e os módulos ficam voltados para o sol, carregando o banco de baterias.', s: [['Módulos', '6 × 340 W'], ['Potência', '2,0 kWp'], ['Baterias', '15 kWh LiFePO₄']] },
+  solar: { t: 'Módulos fotovoltaicos', f: 'energia', d: 'Dois módulos em cada porta lateral e dois na tampa traseira. No transporte ficam na vertical, protegidos; na operação as três abas sobem e os módulos ficam voltados para o sol, carregando o banco de baterias.', s: [['Módulos', '6 × 340 W'], ['Potência', '2,0 kWp'], ['Baterias', '15 kWh LiFePO₄']] },
   picape: { t: 'Picape de reboque', f: 'energia', d: 'Picape cabine dupla 4x4 que leva a unidade até a indústria e segue com ela para o próximo cliente, carregando mangueiras, ferramentas e insumos de manutenção.', s: [['Tração', '4x4'], ['Capacidade de reboque', '3.500 kg'], ['Peso da unidade', '≈ 1.800 kg']] },
   filtro: { t: 'Filtro de sedimentos', f: 'bruta', d: 'Pré-tratamento que retém areia, argila e partículas acima de 5 µm para proteger a membrana.', s: [['Elemento', 'cartucho 5 µm'], ['Troca', '≈ 3 meses']] },
   bomba: { t: 'Bomba de alta pressão', f: 'bruta', d: 'Bomba multiestágio em inox que eleva a pressão da água para vencer a pressão osmótica da membrana.', s: [['Pressão', 'até 15 bar'], ['Motor', '2,2 kW']] },
@@ -659,9 +659,8 @@ function buildScene(opts = {}) {
   const lv = G(body, 'Veneziana', L / 2 + .005, 0);
   B(lv, 'Moldura', .03, 1.35, .7, 0, .95, -.35, M.junta);
   for (let i = 0; i < 16; i++) B(lv, 'Aleta', .06, .035, .62, .02, 1.02 + i * .075, -.35, M.carroceria, { rz: -.5 });
-  B(body, 'Traseira', .04, RY - FY, W, -L / 2 + .02, FY, 0, M.carroceria);
-  B(body, 'Porta_Traseira_Junta', .01, 1.55, .012, -L / 2 - .001, FY + .05, 0, M.junta, { cast: false });
-  B(body, 'Macaneta', .03, .2, .03, -L / 2 - .02, 1.4, -.12, M.inox);
+  B(body, 'Traseira', .04, lowTop - FY, W, -L / 2 + .02, FY, 0, M.carroceria);
+  B(body, 'Junta', .012, .012, W, -L / 2 - .001, lowTop, 0, M.junta, { cast: false });
   [-1, 1].forEach(sd => B(body, 'Lanterna', .03, .1, .22, -L / 2 - .01, FY + .05, sd * .82, M.lanterna, { cast: false }));
   B(body, 'Logotipo', 1.3, .36, .01, 1.45, 1.75, -W / 2 - .005, M.placaUnidade, { ry: Math.PI, cast: false });
   B(body, 'Logotipo', 1.3, .36, .01, 1.45, 1.75, W / 2 + .005, M.placaUnidade, { cast: false });
@@ -672,13 +671,21 @@ function buildScene(opts = {}) {
     const hinge = G(tr, sd < 0 ? 'Porta_Lateral_Servico' : 'Porta_Lateral_Oposta', wingX, sd * (W / 2), 0, RY - .005);
     B(hinge, 'Parede_Aba', wingL, wingH, .04, 0, -wingH, sd * -.02, M.carroceria);
     for (let k = 0; k < 3; k++) B(hinge, 'Junta', .012, wingH, .012, -wingL / 2 + .475 + k * .95, -wingH, sd * .001, M.junta, { cast: false });
-    const pg = new THREE.BoxGeometry(wingL / 3 - .03, .03, wingH - .05);
-    for (let i = 0; i < 3; i++) { const m = mk(hinge, 'Modulo_FV', pg, M.solar, -wingL / 2 + wingL / 3 * (i + .5), -wingH / 2, sd * .04); m.rotation.x = Math.PI / 2; }
+    const pg = new THREE.BoxGeometry(wingL / 2 - .03, .03, wingH - .05);
+    for (let i = 0; i < 2; i++) { const m = mk(hinge, 'Modulo_FV', pg, M.solar, -wingL / 2 + wingL / 2 * (i + .5), -wingH / 2, sd * .04); m.rotation.x = Math.PI / 2; }
     B(hinge, 'Moldura_Modulos', wingL, .035, .05, 0, -wingH, sd * .035, M.moldura);
     B(hinge, 'Puxador_Porta', .6, .035, .045, 0, -wingH - .06, sd * .03, M.inox);
     [-1.1, 1.1].forEach(x => rod(hinge, 'Amortecedor_Gas', new V3(x, -.08, sd * -.06), new V3(x, -.55, sd * -.06), .012, M.inox, 8));
     hinge.userData.side = sd; parts.wings.push(hinge);
   });
+  // tampa traseira basculante com 2 módulos (abre para trás e para cima junto com as portas)
+  const rf = G(tr, 'Tampa_Traseira_Solar', -L / 2, 0, 0, RY - .005); parts.rearFlap = rf;
+  const rfH = RY - lowTop - .005;
+  B(rf, 'Parede_Tampa', .04, rfH, W, .02, -rfH, 0, M.carroceria);
+  const rpg = new THREE.BoxGeometry(.03, rfH - .05, W / 2 - .03);
+  [-1, 1].forEach(sd => mk(rf, 'Modulo_FV', rpg, M.solar, -.03, -rfH / 2, sd * W / 4));
+  B(rf, 'Moldura_Modulos', .05, .035, W, -.035, -rfH, 0, M.moldura);
+  B(rf, 'Puxador_Tampa', .045, .035, .5, -.03, -rfH - .06, 0, M.inox);
 
 
   /* ---------- Picape cabine dupla 4x4 que reboca a unidade (modelo genérico, sem marca) ---------- */
@@ -899,6 +906,7 @@ function applyState(api, s) {
   parts.legs.forEach(l => { l.scale.y = .05 + .37 * s.legs; });
   const ang = s.wings * 1.8;   // ≈ 103° de abertura
   parts.wings.forEach(w => { w.rotation.x = -w.userData.side * ang; });
+  parts.rearFlap.rotation.z = -ang;
   parts.hoses.forEach((h, i) => {
     const p = s.hoses[i]; h.visible = p > .002;
     h.geometry.setDrawRange(0, Math.floor(h.userData.full * p / 60) * 60);
@@ -918,6 +926,7 @@ function buildClip(api, opts = {}) {
   track(p.trailer, 'position', 3);
   p.wheels.forEach(w => track(w, 'quaternion', 4));
   p.wings.forEach(w => track(w, 'quaternion', 4));
+  track(p.rearFlap, 'quaternion', 4);
   p.legs.forEach(l => track(l, 'scale', 3));
   track(p.jockey, 'position', 3);
   track(p.truck, 'position', 3);
