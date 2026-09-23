@@ -1,0 +1,156 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Estação Móvel de Água</title>
+<meta name="description" content="Unidade móvel solar de tratamento de água por osmose reversa: vídeo, modelo 3D animado, animação interativa e arquivos para download.">
+<meta property="og:title" content="Estação Móvel de Água">
+<meta property="og:description" content="Reboque solar que chega à indústria, trata a água do poço, enche a caixa de água tratada e segue para o próximo cliente.">
+<meta property="og:image" content="arquivos/imagens/02_chegada.jpg">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,700&family=IBM+Plex+Mono:wght@500;600&family=IBM+Plex+Sans:wght@400;500;600&display=swap">
+<style>
+  :root{
+    color-scheme: light;
+    --bg:#EEF2F3; --paper:#FFFFFF; --ink:#142226; --muted:#56666B; --line:#D9E1E3; --soft:#F4F7F8; --accent:#0E7C74;
+    --bruta:#E0A93B; --tratada:#2EC4D6; --rejeito:#A77BF3; --energia:#8FD3FF;
+    --display:'Bricolage Grotesque', 'Segoe UI', system-ui, sans-serif;
+    --body:'IBM Plex Sans', 'Segoe UI', system-ui, sans-serif;
+    --mono:'IBM Plex Mono', ui-monospace, Consolas, monospace;
+  }
+  * { box-sizing:border-box; }
+  body { margin:0; background:var(--bg); color:var(--ink); font:16px/1.55 var(--body); }
+  .wrap { max-width:1120px; margin:0 auto; padding-inline:20px; }
+  header { padding-block:40px 24px; }
+  .eyebrow { margin:0; font:600 12px var(--body); letter-spacing:.14em; text-transform:uppercase; color:var(--accent); }
+  h1 { margin:8px 0 12px; font:700 clamp(34px, 6vw, 56px)/1 var(--display); letter-spacing:-.025em; text-wrap:balance; }
+  .lead { margin:0; max-width:62ch; color:var(--muted); font-size:18px; }
+  .flow { display:flex; flex-wrap:wrap; gap:8px 18px; margin:18px 0 0; padding:0; list-style:none; font-size:14px; color:var(--muted); }
+  .flow li { display:flex; align-items:center; gap:8px; }
+  .flow i { width:22px; height:6px; border-radius:3px; background:var(--c); }
+
+  .video { background:#0F1719; border-radius:16px; overflow:hidden; aspect-ratio:16/9; max-width:100%; }
+  .video video { width:100%; height:100%; display:block; object-fit:cover; }
+
+  .actions { display:grid; grid-template-columns:repeat(auto-fit, minmax(260px, 1fr)); gap:14px; margin-top:16px; }
+  .action { display:grid; grid-template-columns:auto 1fr auto; gap:14px; align-items:center; padding:18px 20px; background:var(--paper); border:1px solid var(--line); border-radius:14px; color:inherit; text-decoration:none; transition:border-color .15s, transform .15s; }
+  .action:hover { border-color:var(--accent); transform:translateY(-1px); }
+  .action:focus-visible { outline:2px solid var(--accent); outline-offset:2px; }
+  .action svg { width:34px; height:34px; color:var(--accent); }
+  .action b { display:block; font:700 19px/1.2 var(--display); }
+  .action span { color:var(--muted); font-size:14px; }
+  .action .go { font:600 20px var(--body); color:var(--accent); }
+
+  section { padding-block:36px 8px; }
+  h2 { margin:0 0 6px; font:700 26px/1.15 var(--display); letter-spacing:-.01em; }
+  .sub { margin:0 0 18px; color:var(--muted); }
+  .files { background:var(--paper); border:1px solid var(--line); border-radius:14px; overflow:hidden; }
+  .file { display:grid; grid-template-columns:1fr auto auto; gap:6px 18px; align-items:center; padding:14px 18px; border-top:1px solid var(--line); }
+  .file:first-child { border-top:0; }
+  .file b { display:block; font-weight:600; }
+  .file span { color:var(--muted); font-size:14px; }
+  .file .size { font:500 13px var(--mono); color:var(--muted); font-variant-numeric:tabular-nums; white-space:nowrap; }
+  .btn { display:inline-block; padding:8px 14px; border-radius:999px; background:var(--ink); color:#fff; text-decoration:none; font:600 13px var(--body); white-space:nowrap; }
+  .btn:hover { background:var(--accent); }
+  .btn:focus-visible { outline:2px solid var(--accent); outline-offset:2px; }
+  .tag { display:inline-block; font:600 10.5px var(--mono); letter-spacing:.06em; padding:2px 7px; border-radius:5px; background:var(--soft); color:var(--accent); margin-right:8px; vertical-align:2px; }
+
+  .gallery { display:grid; grid-template-columns:repeat(auto-fill, minmax(240px, 1fr)); gap:12px; }
+  .gallery a { display:block; border-radius:12px; overflow:hidden; background:#dde4e6; aspect-ratio:16/9; }
+  .gallery img { width:100%; height:100%; object-fit:cover; display:block; transition:transform .3s; }
+  .gallery a:hover img { transform:scale(1.03); }
+  .gallery a:focus-visible { outline:2px solid var(--accent); outline-offset:2px; }
+
+  .open { display:grid; grid-template-columns:repeat(auto-fit, minmax(240px, 1fr)); gap:14px; }
+  .open div { background:var(--paper); border:1px solid var(--line); border-radius:14px; padding:18px; }
+  .open b { display:block; font:700 17px/1.2 var(--display); margin-bottom:6px; }
+  .open p { margin:0; color:var(--muted); font-size:14.5px; }
+  .open a { color:var(--accent); }
+  .specs { display:grid; grid-template-columns:repeat(auto-fit, minmax(150px, 1fr)); border-top:1px solid var(--line); border-bottom:1px solid var(--line); margin-top:22px; }
+  .specs div { padding:14px 0; }
+  .specs b { display:block; font:600 22px var(--mono); font-variant-numeric:tabular-nums; }
+  .specs span { font-size:13px; color:var(--muted); }
+  footer { padding-block:40px; color:var(--muted); font-size:13px; }
+  @media (max-width:640px){ .file { grid-template-columns:1fr auto; } .file .size { display:none; } header { padding-block:28px 18px; } }
+  @media (prefers-reduced-motion: reduce){ .action, .gallery img { transition:none; } }
+</style>
+</head>
+<body>
+<div class="wrap">
+  <header>
+    <p class="eyebrow">Unidade móvel · osmose reversa · energia solar</p>
+    <h1>Estação Móvel de Água</h1>
+    <p class="lead">Um reboque solar chega à indústria, capta a água bruta do poço, trata por osmose reversa, enche a caixa de água tratada e segue para o próximo cliente — sem depender da rede elétrica.</p>
+    <ul class="flow">
+      <li><i style="--c:var(--bruta)"></i>Água bruta</li>
+      <li><i style="--c:var(--tratada)"></i>Água tratada</li>
+      <li><i style="--c:var(--rejeito)"></i>Rejeito</li>
+      <li><i style="--c:var(--energia)"></i>Energia solar</li>
+    </ul>
+    <div class="specs">
+      <div><b>500 L/h</b><span>de água tratada</span></div>
+      <div><b>2,8 kWp</b><span>14 módulos solares</span></div>
+      <div><b>&gt; 95%</b><span>de remoção de sais</span></div>
+      <div><b>5.000 L</b><span>caixa elevada abastecida</span></div>
+    </div>
+  </header>
+
+  <div class="video">
+    <video controls playsinline preload="metadata" poster="arquivos/imagens/02_chegada.jpg">
+      <source src="arquivos/Estacao-Movel-de-Agua-WhatsApp.mp4" type="video/mp4">
+    </video>
+  </div>
+
+  <div class="actions">
+    <a class="action" href="visualizador.html">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" aria-hidden="true"><path d="M12 2 3 7v10l9 5 9-5V7z"/><path d="m3 7 9 5 9-5M12 12v10"/></svg>
+      <div><b>Abrir o modelo 3D</b><span>Gire, aproxime e dê play na animação</span></div><span class="go" aria-hidden="true">→</span>
+    </a>
+    <a class="action" href="animacao.html">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" aria-hidden="true"><circle cx="12" cy="12" r="9"/><path d="m10 8 6 4-6 4z" fill="currentColor"/></svg>
+      <div><b>Animação interativa</b><span>Etapas, fluxos de água e cada equipamento</span></div><span class="go" aria-hidden="true">→</span>
+    </a>
+  </div>
+
+  <section id="arquivos">
+    <h2>Arquivos para baixar</h2>
+    <p class="sub">Todos os arquivos do projeto, prontos para abrir no computador ou mandar para o cliente.</p>
+    <div class="files">
+      <div class="file"><div><b><span class="tag">3D</span>Modelo 3D animado (.glb)</b><span>Abre no Visualizador 3D do Windows, no Blender ou no 3dviewer.net</span></div><span class="size">8,6 MB</span><a class="btn" href="arquivos/Estacao-Movel-de-Agua-animado.glb" download>Baixar</a></div>
+      <div class="file"><div><b><span class="tag">SKETCHUP</span>Modelo para SketchUp (.dae)</b><span>Arquivo → Importar no SketchUp Pro, com texturas</span></div><span class="size">4,0 MB</span><a class="btn" href="arquivos/Estacao-Movel-de-Agua-SketchUp-DAE.zip" download>Baixar</a></div>
+      <div class="file"><div><b><span class="tag">OBJ</span>Modelo universal (.obj + texturas)</b><span>Para 3ds Max, Revit, Lumion, Rhino e outros</span></div><span class="size">4,4 MB</span><a class="btn" href="arquivos/Estacao-Movel-de-Agua-OBJ.zip" download>Baixar</a></div>
+      <div class="file"><div><b><span class="tag">VÍDEO</span>Vídeo Full HD (1080p)</b><span>Para apresentar em tela grande</span></div><span class="size">58 MB</span><a class="btn" href="arquivos/Estacao-Movel-de-Agua-FullHD.mp4" download>Baixar</a></div>
+      <div class="file"><div><b><span class="tag">VÍDEO</span>Vídeo para WhatsApp (720p)</b><span>Leve, para enviar pelo celular</span></div><span class="size">21 MB</span><a class="btn" href="arquivos/Estacao-Movel-de-Agua-WhatsApp.mp4" download>Baixar</a></div>
+    </div>
+  </section>
+
+  <section>
+    <h2>Imagens em 4K</h2>
+    <p class="sub">Uma imagem para cada etapa da operação. Clique para abrir em tamanho real.</p>
+    <div class="gallery">
+      <a href="arquivos/imagens/01_industria_antes.jpg"><img src="arquivos/imagens/01_industria_antes.jpg" alt="Indústria antes: poço, caixa de água bruta, caixa elevada e galpão" loading="lazy"></a>
+      <a href="arquivos/imagens/02_chegada.jpg"><img src="arquivos/imagens/02_chegada.jpg" alt="Chegada do reboque solar ao pátio" loading="lazy"></a>
+      <a href="arquivos/imagens/03_implantacao_solar.jpg"><img src="arquivos/imagens/03_implantacao_solar.jpg" alt="Abas solares abertas sobre o reboque" loading="lazy"></a>
+      <a href="arquivos/imagens/04_conexoes.jpg"><img src="arquivos/imagens/04_conexoes.jpg" alt="Mangueiras ligando o reboque às caixas" loading="lazy"></a>
+      <a href="arquivos/imagens/05_tratamento_interior.jpg"><img src="arquivos/imagens/05_tratamento_interior.jpg" alt="Interior: filtro de sedimentos e bomba de alta pressão" loading="lazy"></a>
+      <a href="arquivos/imagens/06_caixa_tratada_cheia.jpg"><img src="arquivos/imagens/06_caixa_tratada_cheia.jpg" alt="Caixa elevada de água tratada cheia" loading="lazy"></a>
+      <a href="arquivos/imagens/07_saida.jpg"><img src="arquivos/imagens/07_saida.jpg" alt="Reboque saindo para o próximo cliente" loading="lazy"></a>
+    </div>
+  </section>
+
+  <section>
+    <h2>Como abrir o arquivo 3D</h2>
+    <p class="sub">O arquivo .glb já traz a animação completa de 52 segundos.</p>
+    <div class="open">
+      <div><b>No navegador</b><p>Use o <a href="visualizador.html">visualizador deste site</a> ou arraste o .glb para o <a href="https://3dviewer.net" rel="noopener">3dviewer.net</a>.</p></div>
+      <div><b>Visualizador 3D do Windows</b><p>Dois cliques no arquivo e o botão ▶ na barra inferior.</p></div>
+      <div><b>Blender (grátis)</b><p>Arquivo → Importar → glTF 2.0. Aperte a barra de espaço para tocar a animação.</p></div>
+    </div>
+  </section>
+
+  <footer>Valores de referência para apresentação; a animação é acelerada. O dimensionamento final depende da análise da água bruta e da demanda da indústria.</footer>
+</div>
+</body>
+</html>

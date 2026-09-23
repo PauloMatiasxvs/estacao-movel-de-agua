@@ -1,0 +1,239 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<style>body{margin:0} .voltar{position:fixed;z-index:10;right:18px;bottom:18px;font:600 13px "IBM Plex Sans",system-ui,sans-serif;background:#142226;color:#fff;text-decoration:none;padding:8px 14px;border-radius:999px;box-shadow:0 4px 14px rgba(0,0,0,.2)} @media (max-width:900px){.voltar{top:10px;bottom:auto;right:10px}}</style>
+<title>Estação Móvel 3D</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,700&family=IBM+Plex+Mono:wght@500;600&family=IBM+Plex+Sans:wght@400;500;600&display=swap">
+<style>
+  /* Visualizador do arquivo 3D: tema claro único, escolhido de propósito */
+  :root{
+    color-scheme: light;
+    --bg:#E4EAEC; --panel:#FFFFFF; --ink:#142226; --muted:#56666B; --line:#D9E1E3; --soft:#F2F5F6; --accent:#0E7C74;
+    --display:'Bricolage Grotesque', 'Segoe UI', system-ui, sans-serif;
+    --body:'IBM Plex Sans', 'Segoe UI', system-ui, sans-serif;
+    --mono:'IBM Plex Mono', ui-monospace, Consolas, monospace;
+  }
+  html, body { height:100%; }
+  body { background:var(--bg); color:var(--ink); font:15px/1.5 var(--body); }
+  .app { box-sizing:border-box; height:100%; display:grid; grid-template-columns:minmax(0,1fr) 340px; grid-template-rows:minmax(0,1fr); gap:16px; padding:16px; }
+  .stage { position:relative; overflow:hidden; border-radius:14px; min-height:0; background:radial-gradient(120% 90% at 50% 35%, #FFFFFF 0%, #E9EEF0 60%, #D6DEE2 100%); }
+  .stage canvas { position:absolute; inset:0; width:100%; height:100%; display:block; touch-action:none; cursor:grab; }
+  .stage canvas:active { cursor:grabbing; }
+  .views { position:absolute; top:14px; left:14px; right:14px; display:flex; flex-wrap:wrap; gap:6px; pointer-events:none; }
+  .chip { pointer-events:auto; font:500 13px var(--body); color:var(--ink); background:rgba(255,255,255,.9); border:1px solid var(--line); border-radius:999px; padding:6px 13px; cursor:pointer; }
+  .chip[aria-pressed="true"] { background:var(--ink); color:#fff; border-color:var(--ink); }
+  .bar { position:absolute; left:14px; right:14px; bottom:14px; background:rgba(255,255,255,.94); border-radius:12px; padding:10px 14px; display:grid; grid-template-columns:auto 1fr auto auto; gap:12px; align-items:center; }
+  .play { width:38px; height:38px; border-radius:50%; border:0; background:var(--ink); color:#fff; cursor:pointer; display:grid; place-items:center; }
+  .play svg { width:16px; height:16px; }
+  #scrub { width:100%; accent-color:var(--accent); margin:0; }
+  .time { font:500 12px var(--mono); color:var(--muted); font-variant-numeric:tabular-nums; }
+  .speed { display:flex; gap:4px; }
+  .speed button { font:600 11px var(--mono); border:1px solid var(--line); background:#fff; color:var(--muted); border-radius:6px; padding:3px 6px; cursor:pointer; }
+  .speed button[aria-pressed="true"] { background:var(--ink); color:#fff; border-color:var(--ink); }
+  .caption { position:absolute; left:14px; bottom:78px; max-width:min(440px, calc(100% - 28px)); background:rgba(255,255,255,.94); border-radius:12px; padding:12px 16px; }
+  .caption .n { font:600 11px var(--mono); color:var(--accent); }
+  .caption b { display:block; font:700 18px/1.2 var(--display); margin:2px 0 4px; }
+  .caption p { margin:0; font-size:13.5px; color:var(--muted); }
+  .loading { position:absolute; inset:0; display:grid; place-items:center; pointer-events:none; }
+  .loading div { background:#fff; border-radius:12px; padding:14px 18px; font:500 14px var(--body); color:var(--muted); min-width:220px; }
+  .loading i { display:block; height:6px; border-radius:3px; background:#DCE3E0; margin-top:8px; overflow:hidden; }
+  .loading i::after { content:""; display:block; height:100%; width:var(--p, 0%); background:var(--accent); }
+  .play:focus-visible, .chip:focus-visible, .speed button:focus-visible, #scrub:focus-visible { outline:2px solid var(--accent); outline-offset:2px; }
+
+  .panel { background:var(--panel); border:1px solid var(--line); border-radius:14px; overflow-y:auto; padding:24px 22px; display:flex; flex-direction:column; gap:20px; min-height:0; }
+  .eyebrow { margin:0; font:600 11px var(--body); letter-spacing:.14em; text-transform:uppercase; color:var(--accent); }
+  h1 { margin:6px 0 8px; font:700 30px/1.05 var(--display); letter-spacing:-.02em; text-wrap:balance; }
+  .lead { margin:0; color:var(--muted); }
+  h2 { margin:0 0 8px; font:600 11px var(--body); letter-spacing:.14em; text-transform:uppercase; color:var(--muted); }
+  dl { margin:0; }
+  dl div { display:flex; justify-content:space-between; gap:12px; padding:7px 0; border-top:1px solid var(--line); font-size:13.5px; }
+  dt { color:var(--muted); } dd { margin:0; font:500 13px var(--mono); text-align:right; }
+  ol.steps { margin:0; padding:0; list-style:none; display:grid; gap:2px; counter-reset:s; }
+  ol.steps li { counter-increment:s; }
+  ol.steps button { width:100%; display:grid; grid-template-columns:22px 1fr; gap:10px; align-items:center; text-align:left; background:none; border:0; border-radius:8px; padding:6px 8px; margin:0 -8px; font:500 14px var(--body); color:var(--ink); cursor:pointer; }
+  ol.steps button::before { content:counter(s); font:600 11px/22px var(--mono); text-align:center; width:22px; height:22px; border-radius:50%; background:#DCE3E0; color:var(--ink); }
+  ol.steps button:hover { background:var(--soft); }
+  ol.steps button.now::before { background:var(--accent); color:#fff; }
+  ol.steps button:focus-visible { outline:2px solid var(--accent); outline-offset:1px; }
+  .open { margin:0; padding:0; list-style:none; display:grid; gap:10px; font-size:13.5px; }
+  .open b { display:block; font-weight:600; }
+  .open span { color:var(--muted); }
+  .note { margin:0; font-size:11.5px; color:var(--muted); line-height:1.45; }
+
+  @media (max-width: 900px){
+    html, body { height:auto; }
+    .app { height:auto; grid-template-columns:1fr; grid-template-rows:auto; }
+    .stage { height:70svh; min-height:420px; }
+    .panel { overflow:visible; }
+    .speed { display:none; }
+    .bar { grid-template-columns:auto 1fr auto; }
+    .caption p { display:none; }
+  }
+</style>
+
+</head>
+<body>
+<a class="voltar" href="./">← Início</a>
+<div class="app">
+  <div class="stage" id="stage">
+    <div class="views" role="group" aria-label="Enquadramento">
+      <button type="button" class="chip" data-v="geral" aria-pressed="true">Visão geral</button>
+      <button type="button" class="chip" data-v="reboque" aria-pressed="false">Reboque</button>
+      <button type="button" class="chip" data-v="caixas" aria-pressed="false">Caixas e poço</button>
+      <button type="button" class="chip" data-v="acompanhar" aria-pressed="false">Acompanhar o reboque</button>
+    </div>
+    <div class="caption" aria-live="polite"><span class="n" id="cap-n">ETAPA 1 DE 6</span><b id="cap-t">Indústria sem água tratada</b><p id="cap-d"></p></div>
+    <div class="bar">
+      <button type="button" class="play" id="play" aria-label="Pausar"><svg viewBox="0 0 16 16" id="ico"></svg></button>
+      <input type="range" id="scrub" min="0" max="52" step="0.05" value="0" aria-label="Tempo da animação">
+      <span class="time" id="time">00:00 / 00:52</span>
+      <div class="speed" role="group" aria-label="Velocidade">
+        <button type="button" data-s="0.5" aria-pressed="false">0,5×</button>
+        <button type="button" data-s="1" aria-pressed="true">1×</button>
+        <button type="button" data-s="2" aria-pressed="false">2×</button>
+      </div>
+    </div>
+    <div class="loading" id="loading"><div>Carregando o arquivo 3D…<i id="prog"></i></div></div>
+  </div>
+
+  <aside class="panel">
+    <header>
+      <p class="eyebrow">Arquivo 3D · glTF 2.0 animado</p>
+      <h1>Estação Móvel de Água</h1>
+      <p class="lead">Este é o próprio arquivo 3D do projeto, aberto no navegador: gire, aproxime e acompanhe a unidade móvel chegando à indústria, tratando a água do poço e seguindo viagem.</p>
+    </header>
+    <section>
+      <h2>Etapas da animação</h2>
+      <ol class="steps" id="steps"></ol>
+    </section>
+    <section>
+      <h2>O arquivo</h2>
+      <dl>
+        <div><dt>Formato</dt><dd>GLB (glTF 2.0)</dd></div>
+        <div><dt>Tamanho</dt><dd id="f-size">8,6 MB</dd></div>
+        <div><dt>Animação</dt><dd id="f-anim">52 s</dd></div>
+        <div><dt>Objetos</dt><dd id="f-obj">—</dd></div>
+        <div><dt>Unidade</dt><dd>metros</dd></div>
+      </dl>
+    </section>
+    <section>
+      <h2>Para abrir no computador</h2>
+      <ul class="open">
+        <li><b>3dviewer.net</b><span>Sem instalar nada: arraste o arquivo para a página.</span></li>
+        <li><b>Blender (grátis)</b><span>Arquivo → Importar → glTF. Barra de espaço toca a animação.</span></li>
+        <li><b>Visualizador 3D do Windows</b><span>Abre com dois cliques; a animação aparece na barra inferior.</span></li>
+      </ul>
+    </section>
+    <p class="note">Arraste para girar · role ou pince para aproximar · botão direito ou dois dedos para mover. A animação é acelerada para apresentação.</p>
+  </aside>
+</div>
+
+<script type="importmap">
+{ "imports": { "three": "https://cdn.jsdelivr.net/npm/three@0.160.0/build/three.module.js", "three/addons/": "https://cdn.jsdelivr.net/npm/three@0.160.0/examples/jsm/" } }
+</script>
+<script type="module">
+import * as THREE from 'three';
+import { OrbitControls } from 'three/addons/controls/OrbitControls.js';
+import { GLTFLoader } from 'three/addons/loaders/GLTFLoader.js';
+import { RoomEnvironment } from 'three/addons/environments/RoomEnvironment.js';
+
+const STEPS = [
+  { t: 0, t1: 5, n: 'Indústria sem água tratada', d: 'O poço da indústria enche a caixa de água bruta, mas essa água tem sais e dureza acima do padrão do processo.' },
+  { t: 5, t1: 15, n: 'Chegada da unidade móvel', d: 'O reboque entra no pátio, estaciona ao lado das caixas e baixa os quatro pés de apoio.' },
+  { t: 15, t1: 23, n: 'Implantação solar', d: 'As abas laterais sobem e expõem 14 módulos fotovoltaicos que alimentam a estação.' },
+  { t: 23, t1: 27, n: 'Conexões', d: 'Mangueiras ligam a caixa de água bruta à unidade e a unidade às caixas de água tratada e de rejeito.' },
+  { t: 27, t1: 40, n: 'Tratamento', d: 'Filtro de sedimentos, bomba de alta pressão e membrana de osmose reversa. A caixa elevada enche de água tratada.' },
+  { t: 40, t1: 52, n: 'Desmobilização e saída', d: 'Mangueiras recolhidas e abas fechadas: a unidade segue para o próximo cliente.' }
+];
+const DUR = 52;
+const reduceMotion = matchMedia('(prefers-reduced-motion: reduce)').matches;
+const stage = document.getElementById('stage');
+
+const renderer = new THREE.WebGLRenderer({ antialias: true, alpha: true });
+renderer.setPixelRatio(Math.min(devicePixelRatio, 2));
+renderer.shadowMap.enabled = true; renderer.shadowMap.type = THREE.PCFSoftShadowMap;
+renderer.toneMapping = THREE.ACESFilmicToneMapping;
+stage.prepend(renderer.domElement);
+const scene = new THREE.Scene();
+scene.environment = new THREE.PMREMGenerator(renderer).fromScene(new RoomEnvironment(renderer), .04).texture;
+scene.environmentIntensity = .55;
+scene.add(new THREE.HemisphereLight(0xffffff, 0xb7c2ba, 1.1));
+const sun = new THREE.DirectionalLight(0xfff3e2, 2.7);
+sun.position.set(-18, 30, 16); sun.castShadow = true; sun.shadow.mapSize.set(2048, 2048);
+Object.assign(sun.shadow.camera, { left: -32, right: 32, top: 32, bottom: -32, near: 1, far: 100 });
+sun.shadow.bias = -.0003; sun.shadow.normalBias = .03; scene.add(sun);
+const camera = new THREE.PerspectiveCamera(36, 1, .05, 400);
+const controls = new OrbitControls(camera, renderer.domElement);
+controls.enableDamping = true; controls.maxPolarAngle = Math.PI * .49; controls.minDistance = 2; controls.maxDistance = 120;
+
+function resize() { const w = stage.clientWidth, h = stage.clientHeight; renderer.setSize(w, h, false); camera.aspect = w / h; camera.updateProjectionMatrix(); }
+new ResizeObserver(resize).observe(stage); resize();
+
+// interface de reprodução
+let mixer = null, t = 0, playing = !reduceMotion, speed = 1, follow = false, trailer = null;
+const ico = document.getElementById('ico'), playBtn = document.getElementById('play'), scrub = document.getElementById('scrub'), timeEl = document.getElementById('time');
+const fmt = s => `00:${String(Math.floor(s)).padStart(2, '0')}`;
+function setPlaying(p) { playing = p; playBtn.setAttribute('aria-label', p ? 'Pausar' : 'Reproduzir'); ico.innerHTML = p ? '<rect x="3" y="2" width="3.5" height="12" fill="currentColor"/><rect x="9.5" y="2" width="3.5" height="12" fill="currentColor"/>' : '<path d="M4 2 L14 8 L4 14 Z" fill="currentColor"/>'; }
+setPlaying(playing);
+playBtn.addEventListener('click', () => setPlaying(!playing));
+scrub.addEventListener('input', () => { t = +scrub.value; });
+document.querySelectorAll('.speed button').forEach(b => b.addEventListener('click', () => { speed = +b.dataset.s; document.querySelectorAll('.speed button').forEach(x => x.setAttribute('aria-pressed', String(x === b))); }));
+const stepsEl = document.getElementById('steps');
+const stepBtns = STEPS.map(s => { const li = document.createElement('li'), b = document.createElement('button'); b.type = 'button'; b.textContent = s.n; b.addEventListener('click', () => { t = s.t + .01; setPlaying(true); }); li.appendChild(b); stepsEl.appendChild(li); return b; });
+const capN = document.getElementById('cap-n'), capT = document.getElementById('cap-t'), capD = document.getElementById('cap-d');
+let lastStep = -1;
+
+// enquadramentos
+const VIEWS = { geral: null, reboque: [[9, 6, 9], [0, 1.4, 0]], caixas: [[4, 9, 6], [-2, 1.5, -6.5]] };
+let home = null, tween = null;
+function flyTo(p, g) { if (reduceMotion) { camera.position.copy(p); controls.target.copy(g); return; } tween = { p0: camera.position.clone(), g0: controls.target.clone(), p1: p, g1: g, s: performance.now() }; }
+document.querySelectorAll('[data-v]').forEach(b => b.addEventListener('click', () => {
+  document.querySelectorAll('[data-v]').forEach(x => x.setAttribute('aria-pressed', String(x === b)));
+  follow = b.dataset.v === 'acompanhar';
+  if (follow) return;
+  const v = b.dataset.v === 'geral' ? home : VIEWS[b.dataset.v].map(a => new THREE.Vector3(...a));
+  flyTo(v[0].clone(), v[1].clone());
+}));
+controls.addEventListener('start', () => { tween = null; if (follow) { follow = false; document.querySelectorAll('[data-v]').forEach(x => x.setAttribute('aria-pressed', 'false')); } });
+
+// carrega o próprio arquivo publicado junto com a página
+const prog = document.getElementById('prog');
+new GLTFLoader().load('arquivos/Estacao-Movel-de-Agua-animado.glb', gltf => {
+  const root = gltf.scene; let n = 0;
+  root.traverse(o => { n++; if (o.isMesh) { o.castShadow = true; o.receiveShadow = true; } });
+  scene.add(root); trailer = root.getObjectByName('Unidade_Movel');
+  mixer = new THREE.AnimationMixer(root); mixer.clipAction(gltf.animations[0]).play();
+  document.getElementById('f-obj').textContent = n.toLocaleString('pt-BR');
+  document.getElementById('f-anim').textContent = `${Math.round(gltf.animations[0].duration)} s`;
+  const box = new THREE.Box3().setFromObject(root), c = box.getCenter(new THREE.Vector3()), r = box.getSize(new THREE.Vector3()).length();
+  const aspect = stage.clientWidth / Math.max(1, stage.clientHeight), k = aspect < 1.2 ? 1.25 / aspect : 1;
+  home = [new THREE.Vector3(c.x + r * .36 * k, c.y + r * .5 * k, c.z + r * .66 * k), c.clone().setY(0)];
+  camera.position.copy(home[0]); controls.target.copy(home[1]); controls.update();
+  document.getElementById('loading').remove();
+}, e => { if (e.total) prog.style.setProperty('--p', `${Math.round(e.loaded / e.total * 100)}%`); },
+() => { document.getElementById('loading').firstElementChild.textContent = 'Não foi possível carregar o arquivo 3D. Recarregue a página.'; });
+
+let last = performance.now();
+const tmp = new THREE.Vector3();
+function loop(now) {
+  const dt = Math.min(.05, (now - last) / 1000); last = now;
+  if (mixer) {
+    if (playing) { t += dt * speed; if (t >= DUR) t -= DUR; }
+    mixer.setTime(t);
+    scrub.value = t.toFixed(2); timeEl.textContent = `${fmt(t)} / ${fmt(DUR)}`;
+    const si = STEPS.findIndex(s => t >= s.t && t < s.t1);
+    if (si !== lastStep && si >= 0) { lastStep = si; capN.textContent = `ETAPA ${si + 1} DE ${STEPS.length}`; capT.textContent = STEPS[si].n; capD.textContent = STEPS[si].d; stepBtns.forEach((b, i) => b.classList.toggle('now', i === si)); }
+    if (follow && trailer) { trailer.getWorldPosition(tmp); tmp.y = 1.2; controls.target.lerp(tmp, .08); camera.position.lerp(tmp.clone().add(new THREE.Vector3(8, 5.5, 9)), .05); }
+  }
+  if (tween) { const k = Math.min(1, (now - tween.s) / 1000), e = k * k * (3 - 2 * k); camera.position.lerpVectors(tween.p0, tween.p1, e); controls.target.lerpVectors(tween.g0, tween.g1, e); if (k >= 1) tween = null; }
+  controls.update(); renderer.render(scene, camera); requestAnimationFrame(loop);
+}
+requestAnimationFrame(loop);
+</script>
+
+</body>
+</html>
