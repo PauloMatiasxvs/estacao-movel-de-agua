@@ -1,6 +1,4 @@
-# STAM · Sistema de Tratamento de Água Móvel
-
-![STAM](arquivos/logo-stam.png)
+# Estação Móvel de Água
 
 Unidade móvel solar de tratamento de água por osmose reversa. O reboque chega à indústria, capta a água bruta do poço, trata, enche a caixa de água tratada e segue para o próximo cliente.
 
