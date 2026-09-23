@@ -134,8 +134,8 @@
       <p class="lead">Um reboque solar chega à indústria, capta a água bruta do poço, trata por osmose reversa, enche a caixa de água tratada e segue para o próximo cliente.</p>
     </header>
     <div class="stats">
-      <div><b>500 L/h</b><span>de água tratada</span></div>
-      <div><b>2,8 kWp</b><span>solar, sem rede elétrica</span></div>
+      <div><b>1.000 L/h</b><span>de água tratada</span></div>
+      <div><b>3,5 kWp</b><span>solar, sem rede elétrica</span></div>
       <div><b>&gt; 95%</b><span>de remoção de sais</span></div>
     </div>
     <section class="now-card" aria-live="polite"><div class="n" id="now-n">ETAPA 1 DE 6</div><h3 id="now-t"></h3><p id="now-d"></p></section>
@@ -199,16 +199,16 @@ const FLOWS = {
 };
 
 const INFO = {
-  poco: { t: 'Poço tubular', f: 'bruta', d: 'Bomba submersa recalca a água do aquífero para a caixa de água bruta. Essa água tem sais e dureza acima do padrão exigido pelo processo industrial.', s: [['Profundidade', '≈ 60 m'], ['Vazão', '1.500 L/h'], ['Bomba', 'submersa 1 cv']] },
+  poco: { t: 'Poço tubular', f: 'bruta', d: 'Bomba submersa recalca a água do aquífero para a caixa de água bruta. Essa água tem sais e dureza acima do padrão exigido pelo processo industrial.', s: [['Profundidade', '≈ 60 m'], ['Vazão', '2.000 L/h'], ['Bomba', 'submersa 1,5 cv']] },
   bruta: { t: 'Caixa de água bruta', f: 'bruta', d: 'Reservatório de acumulação da água do poço, antes do tratamento. É daqui que a unidade móvel capta.', s: [['Volume', '5.000 L'], ['Sólidos dissolvidos', '≈ 2.500 mg/L'], ['Uso', 'não potável']] },
-  reboque: { t: 'Unidade móvel de tratamento', f: 'energia', d: 'Reboque de dois eixos com a estação de osmose reversa, baterias e painel de controle. Chega à indústria, abastece a caixa de água tratada e segue para o próximo cliente, sem depender da rede elétrica.', s: [['Dimensões', '3,8 × 2,0 × 2,5 m'], ['Produção', '500 L/h'], ['Operação', '100% solar']] },
-  solar: { t: 'Módulos fotovoltaicos', f: 'energia', d: 'Seis módulos fixos no teto e oito nas abas laterais, que abrem na implantação e fecham para o transporte.', s: [['Módulos', '14 × 200 W'], ['Potência', '2,8 kWp'], ['Baterias', '10 kWh LiFePO₄']] },
+  reboque: { t: 'Unidade móvel de tratamento', f: 'energia', d: 'Reboque de dois eixos com a estação de osmose reversa, baterias e painel de controle. Chega à indústria, abastece a caixa de água tratada e segue para o próximo cliente, sem depender da rede elétrica.', s: [['Dimensões', '3,8 × 2,0 × 2,5 m'], ['Produção', '1.000 L/h'], ['Operação', '100% solar']] },
+  solar: { t: 'Módulos fotovoltaicos', f: 'energia', d: 'Seis módulos fixos no teto e oito nas abas laterais, que abrem na implantação e fecham para o transporte.', s: [['Módulos', '14 × 250 W'], ['Potência', '3,5 kWp'], ['Baterias', '15 kWh LiFePO₄']] },
   filtro: { t: 'Filtro de sedimentos', f: 'bruta', d: 'Pré-tratamento que retém areia, argila e partículas acima de 5 µm para proteger a membrana.', s: [['Elemento', 'cartucho 5 µm'], ['Troca', '≈ 3 meses']] },
-  bomba: { t: 'Bomba de alta pressão', f: 'bruta', d: 'Bomba multiestágio em inox que eleva a pressão da água para vencer a pressão osmótica da membrana.', s: [['Pressão', 'até 15 bar'], ['Motor', '1,5 kW']] },
-  membrana: { t: 'Membrana de osmose reversa', f: 'tratada', d: 'Separa os sais da água: de um lado sai a água tratada (permeado), do outro o concentrado com os sais retidos.', s: [['Remoção de sais', '> 95%'], ['Recuperação', '50%'], ['Vaso', '4" × 2,1 m']] },
-  controle: { t: 'Painel de controle', f: 'energia', d: 'Inversor, controlador de carga e CLP que ligam as bombas, monitoram pressões e desligam o sistema se a caixa tratada encher.', s: [['Inversor', '3 kW'], ['Automação', 'nível e pressão']] },
-  tratada: { t: 'Caixa de água tratada', f: 'tratada', d: 'Reservatório elevado que recebe a água tratada e abastece o galpão industrial por gravidade.', s: [['Volume', '5.000 L'], ['Altura da torre', '3,2 m'], ['Enchimento', '≈ 10 h de sol']] },
-  rejeito: { t: 'Tanque de rejeito', f: 'rejeito', d: 'Recebe o concentrado salino. Pode seguir para tanque de evaporação ou dessedentação animal, conforme análise.', s: [['Volume', '2.000 L'], ['Vazão', '≈ 500 L/h']] },
+  bomba: { t: 'Bomba de alta pressão', f: 'bruta', d: 'Bomba multiestágio em inox que eleva a pressão da água para vencer a pressão osmótica da membrana.', s: [['Pressão', 'até 15 bar'], ['Motor', '2,2 kW']] },
+  membrana: { t: 'Membrana de osmose reversa', f: 'tratada', d: 'Separa os sais da água: de um lado sai a água tratada (permeado), do outro o concentrado com os sais retidos.', s: [['Remoção de sais', '> 95%'], ['Recuperação', '60%'], ['Membranas', '3 × 4" em série']] },
+  controle: { t: 'Painel de controle', f: 'energia', d: 'Inversor, controlador de carga e CLP que ligam as bombas, monitoram pressões e desligam o sistema se a caixa tratada encher.', s: [['Inversor', '5 kW'], ['Automação', 'nível e pressão']] },
+  tratada: { t: 'Caixa de água tratada', f: 'tratada', d: 'Reservatório elevado que recebe a água tratada e abastece o galpão industrial por gravidade.', s: [['Volume', '5.000 L'], ['Altura da torre', '3,2 m'], ['Enchimento', '≈ 5 h de operação']] },
+  rejeito: { t: 'Tanque de rejeito', f: 'rejeito', d: 'Recebe o concentrado salino. Pode seguir para tanque de evaporação ou dessedentação animal, conforme análise.', s: [['Volume', '2.000 L'], ['Vazão', '≈ 670 L/h']] },
   industria: { t: 'Galpão industrial', f: 'tratada', d: 'Recebe a água tratada por gravidade para o processo produtivo, a caldeira e os vestiários.', s: [['Consumo', '≈ 4.000 L/dia'], ['Alimentação', 'por gravidade']] }
 };
 
@@ -821,7 +821,8 @@ function applyState(api, s) {
 }
 
 /* Clip de animação para exportação glTF (amostrado a 10 fps) */
-function buildClip(api) {
+// opts.fluxos: inclui os traços de água/energia animados como objetos do arquivo (visíveis em qualquer visualizador)
+function buildClip(api, opts = {}) {
   const fps = 10, n = Math.round(DURATION * fps) + 1, times = new Float32Array(n);
   const tracks = [], rec = [];
   const track = (obj, prop, size) => { const arr = new Float32Array(n * size); rec.push({ obj, prop, size, arr }); };
@@ -834,11 +835,39 @@ function buildClip(api) {
   p.hoses.forEach(h => { track(h, 'scale', 3); track(h, 'position', 3); });
   [p.levelBruta, p.levelTratada, p.levelRejeito].forEach(g => track(g, 'scale', 3));
   const pivots = p.hoses.map(h => h.userData.curve.getPoint(0));
+  const dashes = [];
+  if (opts.fluxos) {
+    const grp = new THREE.Group(); grp.name = 'Fluxos_Animados'; api.root.add(grp);
+    const geo = new THREE.CapsuleGeometry(.065, .2, 3, 10);   // mais grosso que os canos (Ø 9–10 cm) para aparecer por fora
+    Object.entries(api.flowPaths).forEach(([k, paths]) => {
+      const cl = new THREE.Color(FLOWS[k].color).lerp(new THREE.Color(0xffffff), .35); const mat = new THREE.MeshStandardMaterial({ name: 'Fluxo_' + k, color: cl, emissive: FLOWS[k].color, emissiveIntensity: 1, roughness: .3 });
+      paths.forEach((pts, idx) => {
+        const cum = [0]; for (let i = 1; i < pts.length; i++) cum.push(cum[i - 1] + pts[i].distanceTo(pts[i - 1]));
+        const P = { pts, cum, len: cum[cum.length - 1] }, n = Math.max(2, Math.floor(P.len / .55));
+        for (let j = 0; j < n; j++) {
+          const m = new THREE.Mesh(geo, mat); m.name = `Fluxo_${k}_${idx}_${j}`; m.castShadow = false; grp.add(m);
+          dashes.push({ m, k, idx, P, off: j * P.len / n });
+          track(m, 'position', 3); track(m, 'quaternion', 4); track(m, 'scale', 3);
+        }
+      });
+    });
+  }
+  const pa = new V3(), pb = new V3(), dir = new V3();
+  const pointOn = (P, d, out) => { let i = 1; while (i < P.cum.length - 1 && P.cum[i] < d) i++; const seg = P.cum[i] - P.cum[i - 1]; return out.copy(P.pts[i - 1]).lerp(P.pts[i], seg > 0 ? (d - P.cum[i - 1]) / seg : 0); };
   for (let i = 0; i < n; i++) {
     const t = Math.min(DURATION - 1e-3, i / fps); times[i] = i / fps;
     const s = stateAt(t); applyState(api, s);
     // no glTF a mangueira "cresce" por escala a partir do ponto de conexão
     p.hoses.forEach((h, k) => { const sc = Math.max(.001, s.hoses[k]); h.scale.setScalar(sc); h.position.copy(pivots[k]).multiplyScalar(1 - sc); });
+    dashes.forEach(D => {
+      const mode = flowActive(D.k, s), on = mode === 'all' || (mode === 'first' && D.idx === 0) || (mode === 'dist' && D.idx === 2);
+      const d = (t * (D.k === 'energia' ? 2.2 : 1.25) + D.off) % D.P.len;
+      pointOn(D.P, d, pa); pointOn(D.P, Math.min(D.P.len, d + .06), pb); dir.subVectors(pb, pa);
+      if (dir.lengthSq() < 1e-10) dir.set(1, 0, 0);
+      D.m.position.copy(pa); D.m.quaternion.setFromUnitVectors(UP, dir.normalize());
+      // escondido fora de operação e perto das pontas (evita o salto do fim para o começo do caminho)
+      D.m.scale.setScalar(on && d > .2 && d < D.P.len - .2 ? 1 : .001);
+    });
     rec.forEach(r => r.obj[r.prop].toArray(r.arr, i * r.size));
   }
   p.hoses.forEach(h => { h.scale.setScalar(1); h.position.set(0, 0, 0); });
