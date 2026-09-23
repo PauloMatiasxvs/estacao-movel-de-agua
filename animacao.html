@@ -185,7 +185,7 @@ const DURATION = 52;
 const STEPS = [
   { k: 'local', t: 0, t1: 5, n: 'Indústria sem água tratada', d: 'O poço da indústria enche a caixa de água bruta, mas essa água tem sais e dureza acima do padrão do processo.' },
   { k: 'chegada', t: 5, t1: 15, n: 'Chegada da unidade móvel', d: 'A picape reboca a unidade até o pátio da indústria; o reboque para ao lado das caixas e baixa os quatro pés de apoio.' },
-  { k: 'solar', t: 15, t1: 23, n: 'Abertura e energia solar', d: 'As portas laterais sobem para dar acesso à estação. Os 6 módulos fotovoltaicos do teto carregam as baterias e ligam o painel de controle.' },
+  { k: 'solar', t: 15, t1: 23, n: 'Abertura e energia solar', d: 'As portas laterais sobem com os 6 módulos fotovoltaicos voltados para o sol. Eles carregam as baterias e ligam o painel de controle.' },
   { k: 'conexao', t: 23, t1: 27, n: 'Conexões', d: 'Três mangueiras: entrada de água bruta, saída de água tratada para a caixa elevada e saída do rejeito.' },
   { k: 'tratamento', t: 27, t1: 40, n: 'Tratamento', d: 'A água bruta passa pelo filtro de sedimentos e pela bomba de alta pressão até a membrana de osmose reversa. A água tratada enche a caixa elevada.' },
   { k: 'saida', t: 40, t1: 52, n: 'Desmobilização e saída', d: 'Mangueiras recolhidas e portas fechadas: a picape leva a unidade para o próximo cliente.' }
@@ -202,7 +202,7 @@ const INFO = {
   poco: { t: 'Poço tubular', f: 'bruta', d: 'Bomba submersa recalca a água do aquífero para a caixa de água bruta. Essa água tem sais e dureza acima do padrão exigido pelo processo industrial.', s: [['Profundidade', '≈ 60 m'], ['Vazão', '2.000 L/h'], ['Bomba', 'submersa 1,5 cv']] },
   bruta: { t: 'Caixa de água bruta', f: 'bruta', d: 'Reservatório de acumulação da água do poço, antes do tratamento. É daqui que a unidade móvel capta.', s: [['Volume', '5.000 L'], ['Sólidos dissolvidos', '≈ 2.500 mg/L'], ['Uso', 'não potável']] },
   reboque: { t: 'Unidade móvel de tratamento', f: 'energia', d: 'Reboque de dois eixos com a estação de osmose reversa, baterias e painel de controle. Chega à indústria, abastece a caixa de água tratada e segue para o próximo cliente, sem depender da rede elétrica.', s: [['Dimensões', '3,8 × 2,0 × 2,5 m'], ['Produção', '1.000 L/h'], ['Operação', '100% solar']] },
-  solar: { t: 'Módulos fotovoltaicos', f: 'energia', d: 'Seis módulos fixos no teto do reboque. Carregam o banco de baterias, que mantém a estação funcionando entre nuvens e no fim da tarde.', s: [['Módulos', '6 × 340 W'], ['Potência', '2,0 kWp'], ['Baterias', '15 kWh LiFePO₄']] },
+  solar: { t: 'Módulos fotovoltaicos', f: 'energia', d: 'Três módulos em cada porta lateral. No transporte ficam na vertical, protegidos; na operação as portas sobem e os módulos ficam voltados para o sol, carregando o banco de baterias.', s: [['Módulos', '6 × 340 W'], ['Potência', '2,0 kWp'], ['Baterias', '15 kWh LiFePO₄']] },
   picape: { t: 'Picape de reboque', f: 'energia', d: 'Picape cabine dupla 4x4 que leva a unidade até a indústria e segue com ela para o próximo cliente, carregando mangueiras, ferramentas e insumos de manutenção.', s: [['Tração', '4x4'], ['Capacidade de reboque', '3.500 kg'], ['Peso da unidade', '≈ 1.800 kg']] },
   filtro: { t: 'Filtro de sedimentos', f: 'bruta', d: 'Pré-tratamento que retém areia, argila e partículas acima de 5 µm para proteger a membrana.', s: [['Elemento', 'cartucho 5 µm'], ['Troca', '≈ 3 meses']] },
   bomba: { t: 'Bomba de alta pressão', f: 'bruta', d: 'Bomba multiestágio em inox que eleva a pressão da água para vencer a pressão osmótica da membrana.', s: [['Pressão', 'até 15 bar'], ['Motor', '2,2 kW']] },
@@ -390,10 +390,10 @@ function makeMaterials(T) {
     moldura: Sm('Moldura_Aluminio', 0xC4CACF, { roughness: .3, metalness: .8 }),
     xadrez: Sm('Chapa_Xadrez', 0xFFFFFF, { map: T.xadrez, roughness: .45, metalness: .6 }),
     skid: Sm('Estrutura_Skid_Verde', 0x2E8A48, { roughness: .35, metalness: .3 }),
-    tuboSkid: Sm('Tubulacao_Skid_Verde', 0x3FB060, { roughness: .3, metalness: .1 }),
-    membrana: Sm('Vaso_Membrana_Branco', 0xF6F7F5, { roughness: .2, metalness: .05 }),
+    tuboSkid: Sm('Tubulacao_Skid_Verde', 0x55D46B, { roughness: .25, metalness: .05 }),
+    membrana: Sm('Vaso_Membrana_Branco', 0xF8F9F7, { roughness: .18, metalness: .02, emissive: 0xFFFFFF, emissiveIntensity: .08 }),
     vermelho: Sm('Detalhe_Vermelho', 0xC4372D, { roughness: .4 }),
-    vasoAzul: Sm('Vaso_Filtro_Azul', 0x243B73, { roughness: .35, metalness: .2 }),
+    vasoAzul: Sm('Vaso_Filtro_Azul', 0x1F2F63, { roughness: .45, metalness: .1 }),
     inox: Sm('Aco_Inox', 0xC9CDD0, { roughness: .25, metalness: .9 }),
     motor: Sm('Motor_Preto', 0x202427, { roughness: .45, metalness: .5 }),
     painel: Sm('Painel_Controle_Azul', 0x2BA3B5, { roughness: .4, metalness: .2 }),
@@ -401,6 +401,10 @@ function makeMaterials(T) {
     manometro: Sm('Manometro', 0xF2F2EE, { roughness: .2 }),
     ledOff: Sm('LED', 0x335544, { roughness: .3 }),
     led: Sm('LED_Ligado', 0x3CFF9A, { emissive: 0x3CFF9A, emissiveIntensity: 0 }),
+    alavanca: Sm('Alavanca_Amarela', 0xE8B923, { roughness: .4 }),
+    cabo: Sm('Cabo_Branco', 0xF2F2EE, { roughness: .5 }),
+    vidroRot: Sm('Rotametro_Vidro', 0xDFF3F7, { roughness: .05, transparent: true, opacity: .45, depthWrite: false }),
+    tampaEscura: Sm('Tampa_Membrana', 0x2D3336, { roughness: .5 }),
     pintura: Sm('Pintura_Picape_Prata', 0xB7BEC3, { roughness: .28, metalness: .65 }),
     plasticoPreto: Sm('Plastico_Preto', 0x1D2023, { roughness: .7 }),
     vidroCarro: Sm('Vidro_Picape', 0x1C272D, { roughness: .05, metalness: .45 }),
@@ -661,19 +665,17 @@ function buildScene(opts = {}) {
   [-1, 1].forEach(sd => B(body, 'Lanterna', .03, .1, .22, -L / 2 - .01, FY + .05, sd * .82, M.lanterna, { cast: false }));
   B(body, 'Logotipo', 1.3, .36, .01, 1.45, 1.75, -W / 2 - .005, M.placaUnidade, { ry: Math.PI, cast: false });
   B(body, 'Logotipo', 1.3, .36, .01, 1.45, 1.75, W / 2 + .005, M.placaUnidade, { cast: false });
-  // módulos solares do teto (fixos)
-  const panelGeo = new THREE.BoxGeometry(1.3, .035, 1.12);   // 6 módulos de ≈ 340 W
-  const roofArr = G(tr, 'Modulos_Teto', 0, 0, 0, RY + .1);
-  for (let i = 0; i < 3; i++) for (let j = 0; j < 2; j++) mk(roofArr, 'Modulo_FV', panelGeo, M.solar, -1.32 + i * 1.32, 0, -.57 + j * 1.14);
-  [-1.95, 1.95].forEach(x => B(roofArr, 'Suporte', .05, .06, 2.2, x, -.07, 0, M.moldura));
-  // portas laterais basculantes (acesso à estação)
+  // portas laterais basculantes: 3 módulos solares em cada (6 no total), voltados para o sol quando abertas
   parts.wings = [];
   const wingL = 2.85, wingH = 1.3, wingX = -.475;
   [-1, 1].forEach(sd => {
     const hinge = G(tr, sd < 0 ? 'Porta_Lateral_Servico' : 'Porta_Lateral_Oposta', wingX, sd * (W / 2), 0, RY - .005);
     B(hinge, 'Parede_Aba', wingL, wingH, .04, 0, -wingH, sd * -.02, M.carroceria);
     for (let k = 0; k < 3; k++) B(hinge, 'Junta', .012, wingH, .012, -wingL / 2 + .475 + k * .95, -wingH, sd * .001, M.junta, { cast: false });
-    B(hinge, 'Puxador_Porta', .6, .035, .045, 0, -wingH + .1, sd * .03, M.inox);
+    const pg = new THREE.BoxGeometry(wingL / 3 - .03, .03, wingH - .05);
+    for (let i = 0; i < 3; i++) { const m = mk(hinge, 'Modulo_FV', pg, M.solar, -wingL / 2 + wingL / 3 * (i + .5), -wingH / 2, sd * .04); m.rotation.x = Math.PI / 2; }
+    B(hinge, 'Moldura_Modulos', wingL, .035, .05, 0, -wingH, sd * .035, M.moldura);
+    B(hinge, 'Puxador_Porta', .6, .035, .045, 0, -wingH - .06, sd * .03, M.inox);
     [-1.1, 1.1].forEach(x => rod(hinge, 'Amortecedor_Gas', new V3(x, -.08, sd * -.06), new V3(x, -.55, sd * -.06), .012, M.inox, 8));
     hinge.userData.side = sd; parts.wings.push(hinge);
   });
@@ -728,49 +730,80 @@ function buildScene(opts = {}) {
   }));
   hot.picape = [pk, new V3(3.1, 2.3, 0)];
 
-  /* ---------- Estação de osmose reversa (skid) ---------- */
-  const sk = G(tr, 'Skid_Osmose_Reversa', 0, 0, 0, FY + .05);
-  const fr = (a, b) => rod(sk, 'Perfil_Skid', new V3(...a), new V3(...b), .03, M.skid, 4);
-  const X0 = -1.3, X1 = .9, Z0 = -.42, Z1 = .42, HT = 1.25;
-  [[X0, Z0], [X1, Z0], [X1, Z1], [X0, Z1]].forEach(([x, z], i, a) => {
-    fr([x, 0, z], [x, HT, z]);
-    const [nx, nz] = a[(i + 1) % 4]; fr([x, 0, z], [nx, 0, nz]); fr([x, HT, z], [nx, HT, nz]);
+  /* ---------- Estação de osmose reversa (skid), no desenho do projeto de referência ---------- */
+  const SKX = -.55;                                       // centro do skid no reboque (x)
+  const sk = G(tr, 'Skid_Osmose_Reversa', SKX, 0, 0, FY + .05);
+  const fr = (a, b, r = .03) => rod(sk, 'Perfil_Skid', new V3(...a), new V3(...b), r, M.skid, 4);
+  const BX = .85, BZ = .4, PX = .7, PH = 1.34, SAD = .95, MY = SAD + .06 + .15;
+  // base retangular com travessas
+  [[-BX, -BZ, BX, -BZ], [-BX, BZ, BX, BZ], [-BX, -BZ, -BX, BZ], [BX, -BZ, BX, BZ], [-.3, -BZ, -.3, BZ], [.3, -BZ, .3, BZ]].forEach(([a, b, c, d]) => fr([a, .03, b], [c, .03, d]));
+  // pórticos nas duas pontas: a membrana passa por dentro e apoia no berço
+  [-PX, PX].forEach(x => {
+    [-BZ, BZ].forEach(z => fr([x, .03, z], [x, PH, z]));
+    fr([x, PH, -BZ], [x, PH, BZ]); fr([x, SAD, -BZ], [x, SAD, BZ]);
+    B(sk, 'Berco_Membrana', .09, .06, .34, x, SAD + .01, 0, M.skid);
   });
-  fr([-.2, 0, Z0], [-.2, HT, Z0]); fr([-.2, 0, Z1], [-.2, HT, Z1]); fr([-.2, 0, Z0], [-.2, 0, Z1]);
-  fr([X0, .1, Z0], [-.2, HT - .1, Z0]); fr([X1, .1, Z1], [-.2, HT - .1, Z1]);
-  fr([.9, HT, 0], [.9, HT + .5, 0]); fr([X0 + .05, HT, 0], [X0 + .05, HT + .2, 0]);
-  B(sk, 'Painel_Manometros', .04, .6, .5, .95, HT - .05, .25, M.skid);
-  [[HT + .35, .12], [HT + .35, .38], [HT + .12, .25]].forEach(([y, z]) => {
-    C(sk, 'Manometro', .06, .06, .03, .99, y, z, M.manometro, { rz: Math.PI / 2, center: true, seg: 24 });
-    mk(sk, 'Aro_Manometro', new THREE.TorusGeometry(.06, .008, 6, 24), M.inox, 1.005, y, z, { ry: Math.PI / 2 });
+  [-BZ, BZ].forEach(z => { fr([-PX, .55, z], [PX, .55, z]); fr([-BX, .03, z], [-PX, SAD, z]); fr([BX, .03, z], [PX, .55, z]); });
+  // painel de instrumentos no meio do lado de serviço: 2 manômetros e 2 rotâmetros
+  const pz = -BZ - .02;
+  fr([-.26, .03, -BZ], [-.26, 1.5, -BZ]); fr([.26, .03, -BZ], [.26, 1.5, -BZ]); fr([-.26, 1.5, -BZ], [.26, 1.5, -BZ]);
+  B(sk, 'Painel_Instrumentos', .5, .52, .025, 0, .95, pz, M.skid);
+  [[.13, 1.32], [.13, 1.12]].forEach(([x, y]) => {
+    C(sk, 'Manometro', .055, .055, .03, x, y, pz - .02, M.manometro, { rx: Math.PI / 2, center: true, seg: 24 });
+    mk(sk, 'Aro_Manometro', new THREE.TorusGeometry(.055, .008, 6, 24), M.inox, x, y, pz - .035);
+    B(sk, 'Ponteiro', .005, .042, .004, x, y, pz - .038, M.motor, { center: true, rz: .7, cast: false });
   });
-  // vaso da membrana
-  const mbY = HT + .2 + .13;
-  C(sk, 'Vaso_Membrana', .13, .13, 2.2, -.2, mbY, 0, M.membrana, { rz: Math.PI / 2, center: true, seg: 36 });
-  [-1.32, .92].forEach(x => { C(sk, 'Tampa_Vaso', .15, .15, .08, x, mbY, 0, M.membrana, { rz: Math.PI / 2, center: true, seg: 36 }); C(sk, 'Porta_Vaso', .045, .045, .02, x + (x < 0 ? -.05 : .05), mbY, 0, M.vermelho, { rz: Math.PI / 2, center: true, seg: 16 }); });
-  [-.9, .5].forEach(x => B(sk, 'Berco', .06, .2, .3, x, HT, 0, M.skid));
-  hot.membrana = [sk, new V3(-.2, mbY + .3, 0)];
-  // filtro de sedimentos
-  Lt(sk, 'Vaso_Filtro', [[0, 0], [.2, 0], [.22, .04], [.22, .52], [.18, .6], [.08, .63], [0, .63]], -1.0, 0, .12, M.vasoAzul, { seg: 32 });
-  C(sk, 'Cabecote_Filtro', .07, .07, .08, -1.0, .63, .12, M.inox, { seg: 16 });
-  hot.filtro = [sk, new V3(-1.0, .85, .12)];
-  // bomba de alta pressão multiestágio + motor
-  B(sk, 'Base_Bomba', .95, .04, .3, -.05, 0, -.1, M.skid);
-  C(sk, 'Corpo_Bomba_Inox', .075, .075, .55, -.2, .2, -.1, M.inox, { rz: Math.PI / 2, center: true, seg: 24 });
-  for (let i = 0; i < 5; i++) mk(sk, 'Estagio', new THREE.TorusGeometry(.078, .006, 6, 24), M.inox, -.42 + i * .11, .2, -.1, { ry: Math.PI / 2 });
-  C(sk, 'Motor', .11, .11, .36, .26, .2, -.1, M.motor, { rz: Math.PI / 2, center: true, seg: 24 });
-  for (let i = 0; i < 6; i++) mk(sk, 'Aleta_Motor', new THREE.TorusGeometry(.112, .006, 6, 24), M.motor, .12 + i * .055, .2, -.1, { ry: Math.PI / 2 });
-  B(sk, 'Caixa_Ligacao', .12, .08, .1, .26, .31, -.1, M.motor);
-  hot.bomba = [sk, new V3(0, .45, -.1)];
-  // tubulação verde do skid (espelha o caminho do fluxo)
+  [-.06, -.16].forEach(x => {
+    C(sk, 'Rotametro', .022, .022, .38, x, 1.0, pz - .045, M.vidroRot, { seg: 16, cast: false });
+    C(sk, 'Rotametro_Bocal', .03, .03, .04, x, .97, pz - .045, M.inox, { seg: 12 }); C(sk, 'Rotametro_Bocal', .03, .03, .04, x, 1.37, pz - .045, M.inox, { seg: 12 });
+    S(sk, 'Flutuador', .016, x, 1.2, pz - .045, M.vermelho, { seg: 8, cast: false });
+  });
+  // vaso da membrana: corpo branco com as pontas alargadas, tampas escuras com a porta vermelha
+  const vaso = [[0, -1.13], [.13, -1.13], [.17, -1.12], [.185, -1.08], [.185, -.95], [.17, -.88], [.15, -.8], [.15, .8], [.17, .88], [.185, .95], [.185, 1.08], [.17, 1.12], [.13, 1.13], [0, 1.13]];
+  Lt(sk, 'Vaso_Membrana', vaso, 0, MY, 0, M.membrana, { seg: 40, rz: -Math.PI / 2 });
+  [-1, 1].forEach(sd => {
+    C(sk, 'Tampa_Membrana', .13, .13, .012, sd * 1.136, MY, 0, M.tampaEscura, { rz: Math.PI / 2, center: true, seg: 32, cast: false });
+    C(sk, 'Porta_Membrana', .036, .036, .03, sd * 1.15, MY, 0, M.vermelho, { rz: Math.PI / 2, center: true, seg: 16 });
+  });
+  hot.membrana = [sk, new V3(0, MY + .38, 0)];
+  // tanque azul-marinho (filtro/vaso de pressão) numa ponta
+  Lt(sk, 'Tanque_Filtro', [[0, 0], [.2, 0], [.21, .03], [.21, .5], [.17, .58], [.07, .62], [0, .62]], -.58, .06, .12, M.vasoAzul, { seg: 36 });
+  C(sk, 'Cabecote_Tanque', .05, .05, .06, -.58, .68, .12, M.inox, { seg: 16 });
+  hot.filtro = [sk, new V3(-.58, .95, .12)];
+  // bomba multiestágio inox + cabeçote + motor preto, ao longo da base
+  const PZ = -.18, PY = .16;
+  B(sk, 'Base_Bomba', 1.0, .04, .26, .17, .03, PZ, M.skid);
+  C(sk, 'Corpo_Bomba_Inox', .06, .06, .52, -.03, PY, PZ, M.inox, { rz: Math.PI / 2, center: true, seg: 24 });
+  for (let i = 0; i < 4; i++) mk(sk, 'Estagio', new THREE.TorusGeometry(.062, .006, 6, 24), M.inox, -.24 + i * .12, PY, PZ, { ry: Math.PI / 2 });
+  C(sk, 'Cabecote_Bomba', .09, .09, .1, .27, PY, PZ, M.inox, { rz: Math.PI / 2, center: true, seg: 24 });
+  for (let i = 0; i < 3; i++) mk(sk, 'Nervura', new THREE.TorusGeometry(.092, .01, 6, 24), M.inox, .24 + i * .03, PY, PZ, { ry: Math.PI / 2 });
+  C(sk, 'Motor', .1, .1, .3, .47, PY, PZ, M.motor, { rz: Math.PI / 2, center: true, seg: 24 });
+  for (let i = 0; i < 5; i++) mk(sk, 'Aleta_Motor', new THREE.TorusGeometry(.102, .006, 6, 24), M.motor, .36 + i * .055, PY, PZ, { ry: Math.PI / 2 });
+  C(sk, 'Tampa_Ventilador', .1, .085, .06, .65, PY, PZ, M.motor, { rz: Math.PI / 2, center: true, seg: 24 });
+  B(sk, 'Caixa_Ligacao', .1, .08, .1, .45, PY + .1, PZ, M.motor);
+  hot.bomba = [sk, new V3(.2, .5, PZ)];
+  // tubulação verde (mesmos caminhos do fluxo animado)
   const skidPipes = [
-    [[-1.3, .23, -1.05], [-1.3, .23, -.3], [-1.0, .23, -.3], [-1.0, .23, -.08]],
-    [[-1.0, .66, .12], [-1.0, .75, .12], [-.6, .75, .12], [-.6, .2, .12], [-.6, .2, -.1], [-.48, .2, -.1]],
-    [[-.1, .28, -.1], [-.1, .5, -.1], [-.1, .5, -.3], [-1.4, .5, -.3], [-1.4, mbY, -.3], [-1.4, mbY, 0]],
-    [[1.0, mbY, 0], [1.1, mbY, 0], [1.1, .45, 0], [1.1, .45, -.6], [.2, .45, -.6], [.2, .23, -.6], [.2, .23, -1.05]],
-    [[.92, mbY + .1, .1], [.99, mbY + .1, .25], [.99, .35, .25], [.75, .35, .25], [.75, .35, -.7], [.75, .23, -.7], [.75, .23, -1.05]]
+    [[-.75, .23, -1.05], [-.75, .23, -.5], [-.58, .23, -.5], [-.58, .23, -.09]],
+    [[-.37, PY, .12], [-.34, PY, .12], [-.34, PY, PZ], [-.29, PY, PZ]],
+    [[.27, PY + .09, PZ], [.27, .8, PZ], [.27, .8, .12], [-1.0, .8, .12], [-1.0, .8, 0], [-1.0, MY - .17, 0]],
+    [[1.15, MY, 0], [1.24, MY, 0], [1.24, .85, 0], [1.24, .85, -.3], [-.06, .85, -.3], [-.06, .85, -.465], [-.06, .95, -.465], [-.06, 1.39, -.465], [-.06, 1.52, -.465], [-.06, 1.52, -.88], [.75, 1.52, -.88], [.75, .23, -.88], [.75, .23, -1.05]],
+    [[1.0, MY - .17, 0], [1.0, .92, 0], [1.0, .92, -.22], [-.16, .92, -.22], [-.16, .92, -.465], [-.16, .95, -.465], [-.16, 1.39, -.465], [-.16, 1.58, -.465], [-.16, 1.58, -.95], [1.3, 1.58, -.95], [1.3, .23, -.95], [1.3, .23, -1.05]]
   ];
-  skidPipes.forEach((pp, i) => pipeRun(sk, 'Tubo_Skid_' + (i + 1), pp, .022, M.tuboSkid));
+  // os trechos dentro dos rotâmetros não recebem tubo (o vidro aparece)
+  const semRotametro = pp => { const i = pp.findIndex((q, k) => k && q[1] === 1.39 && pp[k - 1][1] === .95); return i < 0 ? [pp] : [pp.slice(0, i), pp.slice(i)]; };
+  skidPipes.forEach((pp, i) => semRotametro(pp).forEach((part, j) => pipeRun(sk, `Tubo_Skid_${i + 1}_${j + 1}`, part, .028, M.tuboSkid)));
+  // registros com alavanca amarela
+  const registro = (x, y, z, eixo) => {
+    const g = G(sk, 'Registro_Esfera', x, z, 0, y);
+    C(g, 'Corpo', .04, .04, .11, 0, 0, 0, M.inox, { center: true, seg: 14, rx: eixo === 'z' ? Math.PI / 2 : 0, rz: eixo === 'x' ? Math.PI / 2 : 0 });
+    B(g, 'Alavanca', eixo === 'x' ? .03 : .15, .016, eixo === 'x' ? .15 : .03, 0, .05, 0, M.alavanca, { cast: false });
+  };
+  registro(-.75, .23, -.75, 'z'); registro(.27, .55, PZ, 'y'); registro(.75, .6, -.88, 'y'); registro(1.3, .6, -.95, 'y'); registro(-1.0, .88, 0, 'y');
+  // manômetro na alimentação da membrana e cabos elétricos brancos
+  C(sk, 'Manometro_Alimentacao', .04, .04, .025, -1.0, .88, -.06, M.manometro, { rx: Math.PI / 2, center: true, seg: 20 });
+  [[[.45, PY + .18, PZ], [.35, .6, -.3], [.1, 1.1, -.38], [0, 1.25, -.405]], [[-.58, .74, .12], [-.45, 1.0, -.1], [-.2, 1.25, -.38], [-.1, 1.3, -.405]]].forEach((pts, i) =>
+    mk(sk, 'Cabo_Eletrico_' + (i + 1), new THREE.TubeGeometry(new THREE.CatmullRomCurve3(pts.map(q => new V3(...q))), 24, .007, 6, false), M.cabo, 0, 0, 0, { cast: false }));
   // conexões de serviço na lateral
   [[-1.3, M.pvcOcre], [.2, M.pvcAzul], [.75, M.aguaRejeito]].forEach(([x, m]) => {
     C(tr, 'Engate_Rapido', .045, .045, .08, x, FY + .28, -W / 2 - .03, M.inox, { rx: Math.PI / 2, center: true, seg: 16 });
@@ -782,9 +815,9 @@ function buildScene(opts = {}) {
   B(tr, 'Inversor', .16, .5, .38, L / 2 - .14, 1.45, -.2, M.carroceria, { r: .01 });
   B(tr, 'Banco_Baterias', .55, .45, .7, 1.35, FY + .05, -.35, M.bateria, { r: .01 });
   for (let i = 0; i < 4; i++) B(tr, 'Modulo_Bateria', .12, .02, .6, 1.15 + i * .135, FY + .5, -.35, M.painel, { cast: false });
-  pipeRun(tr, 'Eletroduto', [[1.2, RY - .05, .7], [1.75, RY - .05, .7], [1.75, 1.72, .7], [1.75, 1.72, .45]], .015, M.motor);
+  pipeRun(tr, 'Eletroduto', [[1.2, RY - .05, -.92], [1.75, RY - .05, -.92], [1.75, RY - .05, .7], [1.75, 1.72, .7], [1.75, 1.72, .45]], .015, M.motor);
   hot.controle = [tr, new V3(L / 2 - .15, 2.15, .45)];
-  hot.solar = [tr, new V3(-.5, RY + .45, 0)];
+  hot.solar = [parts.wings[0], new V3(0, -.7, -.3)];   // acompanha a porta do lado de serviço
   hot.reboque = [tr, new V3(1.45, 2.95, -.9)];
 
   /* ---------- Mangueiras (crescem na conexão) ---------- */
@@ -802,7 +835,7 @@ function buildScene(opts = {}) {
 
   /* ---------- Caminhos de fluxo (coordenadas do mundo com o reboque estacionado) ---------- */
   const P = a => a.map(q => new V3(...q));
-  const skidW = a => a.map(q => new V3(q[0], q[1] + FY + .05, q[2]));
+  const skidW = a => a.map(q => new V3(q[0] + SKX, q[1] + FY + .05, q[2]));
   const flowPaths = {
     bruta: [
       P([[-7.55, .55, -8.5], [-7.2, .55, -8.5], [-7.2, .06, -8.5], [-4, .06, -8.5], [-4, .06, -6.9], [-4, 2.45, -6.9], [-4, 2.45, -6.1]]),
@@ -815,7 +848,7 @@ function buildScene(opts = {}) {
       P([[5.9, 3.3, -6.2], [5.9, .06, -6.2], [7.3, .06, -6.2], [7.3, .06, -10], [7.95, .06, -10], [7.95, 1.4, -10]])
     ],
     rejeito: [[...skidW(skidPipes[4]), ...parts.hoses[2].userData.curve.getPoints(40).slice(1)]],
-    energia: [P([[-1.2, RY + .12, .3], [.8, RY + .12, .3], [1.2, RY - .05, .7], [1.75, RY - .05, .7], [1.75, 1.72, .7], [1.75, 1.72, .45]]), P([[L / 2 - .15, 1.35, .3], [1.62, 1.1, -.2], [1.35, 1.2, -.35]])]
+    energia: [P([[-.5, 2.8, -2.1], [-.5, 2.52, -1.02], [1.2, RY - .05, -.92], [1.75, RY - .05, -.92], [1.75, RY - .05, .7], [1.75, 1.72, .7], [1.75, 1.72, .45]]), P([[L / 2 - .15, 1.35, .3], [1.62, 1.1, -.2], [1.35, 1.2, -.35]])]
   };
 
   root.traverse(o => { if (o.isMesh) o.updateMatrix(); });
@@ -1006,8 +1039,8 @@ const CAMERA_KEYS = [
   { t: 21.3, p: [-9, 6, 3], g: [0, 1.2, -1] },
   { t: 22.6, p: [-2, 7, -13.5], g: [.5, 1, -3.5] },
   { t: 27.2, p: [1, 6.5, -12.5], g: [.8, 1, -4] },
-  { t: 29.3, p: [-.5, 2.05, -2.75], g: [-.45, 1.05, -.1] },
-  { t: 34.6, p: [.3, 2.15, -2.9], g: [-.4, 1.6, 0] },
+  { t: 29.3, p: [-.3, 2.2, -3.45], g: [-.5, 1.4, -.1] },
+  { t: 34.6, p: [.7, 2.25, -3.55], g: [-.6, 1.5, 0] },
   { t: 35.6, p: [1, 3.4, -6.8], g: [0, 1.4, -.5] },
   { t: 37.2, p: [12.5, 6.5, -1.5], g: [4.5, 3.2, -7] },
   { t: 40.5, p: [13.5, 8.5, 2], g: [5, 2.6, -6.5] },
